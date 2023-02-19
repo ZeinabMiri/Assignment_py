@@ -1,87 +1,171 @@
+from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List
+
 from db import DB
-from models import Country
-from models import City
-import json
+from models import Country , City
+
 
 app = FastAPI()
-db = DB("Country_api.db")
+db = DB("Country.db")
 
-
-
-
-# @app.get("/")
-# # async def read_root():
-#     with open("seed.json","r") as f:
-#             seed_data = f.read()
-#             print(seed_data)
-#             seed_data = json.load(f)
-#             print(seed_data)
-#     db = DB ("Country_api.db")
-#     for table, records in seed_data.items():
-#         for record in records:
-#             db.insert(table= table, fields=record)
-#     return {"Ddatabase seed successfully"}
+# app.curr_id = 1 
+# app.country: List[Country] = []
 
 
 @app.get("/")
 def root():
-    return("hello")
+    return "Hello"
+    
+@app.get("/country")
+def get_country():
+    get_country_query = """
+    SELECT * FROM country
+    """
+    data = db.call_db(get_country_query)
+    country = []
+    for element in data:
+        id, country_name, country_code = element
+        country.append(Country(id=id, country_name=country_name, country_code=country_code))
+    print(data)
+    return country
 
+@app.get("/city")
+def get_city():
+    get_city_query = """
+    SELECT * FROM city
+    """
+    data = db.call_db(get_city_query)
+    city = []
+    for element in data:
+        id, city_name, country_id = element
+        city.append(City(id=id, city_name=city_name, country_id=country_id))
+    print(data)
+    return city
 
-@app.get("/countries")
-def get_countries():
-    data = db.get(table="country")
-    return data
-
-
-@app.post("/create_country")
-def create_country(country: Country):
-    print(country)
-    db.insert(table="country", fields={"country_name": country.country_name, "country_code": country.country_code})
-    return "Successfully created"
-
-@app.post("/create_city")
-def create_city(city: City):
-    print(city)
-    db.insert(table="city", fields={"city_name": city.city_name, "country_id": str(city.country_id)})
-    return "Successfully created"
+# @app.get("/country/{id}")
+# def get_country(id: int):
+#     return "Returns a single task with id " + str(id)
 
 @app.get("/countries/{id}")
 def get_countries_by_id(id: int):
-    data = db.get(table="country", where=("id", str(id)))
-    return data
+    # Construct the SELECT query to retrieve the country data
+    query = "SELECT * FROM country WHERE id = " + str(id)
 
+    # Execute the query and retrieve the data from the database
+    data = db.call_db(query)
 
-
+    if data:
+        # If the country is found, return it as a JSON response
+        return {"id": data[0][0], "country_name": data[0][1], "country_code": data[0][2]}
+    else:
+        # If the country is not found, return a 404 Not Found error
+        return {"error": "Country not found"}
 
 @app.get("/cities/{id}")
 def get_cities_by_id(id: int):
-    data = db.get(table="city", where=("id", str(id)))
+    # Construct the SELECT query to retrieve the city data
+    query = "SELECT * FROM city WHERE id = " + str(id)
+
+    # Execute the query and retrieve the data from the database
+    data = db.call_db(query)
+
+    if data:
+        # If the city is found, return it as a JSON response
+        return {"id": data[0][0], "city_name": data[0][1], "country_id": data[0][2]}
+    else:
+        # If the city is not found, return a 404 Not Found error
+        return {"error": "City not found"}
+    
+# @app.post("/add_country")
+# def add_country(country: Country):
+#     insert_query = """
+#     INSERT INTO country (country_name, country_code)
+#     VALUES ( ?, ? )
+#     """
+#     db.call_db(insert_query, country.country_name, country.country_code)
+
+#     print(country)
+#     # country.id = app.curr_id
+#     # app.country.append(country)
+#     # app.curr_id += 1
+#     return "Adds a task"
+
+@app.post("/add_country")
+def add_country(country: Country):
+    insert_query = """
+    INSERT INTO country (country_name, country_code)
+    VALUES ( ?, ? )
+    """
+    db.call_db(insert_query, country.country_name, country.country_code)
+
+    select_query = """
+    SELECT * FROM country WHERE country_name = ? AND country_code = ?
+    """
+    data = db.call_db(select_query, country.country_name, country.country_code)
+
+    print(country)
     return data
 
-@app.get("/cities")
-def get_cities():
-    data = db.get(table="city")
-    return data
-
-
+# @app.delete("/delete_country/{id}")
+# def delete_country(id: int):
+#     delete_query = """
+#     DELETE FROM country WHERE id = ?
+#     """
+#     db.call_db(delete_query, id)
+#     # app.country = list(filter(lambda x: x.id != id, app.country))
+#     return True
 
 @app.delete("/delete_country/{id}")
-def delete_country(id):
-    db.delete(table="country", id=id)
-
-
-
-@app.put("/update_country")
-def update_country(country: Country):
-    data = db.update(
-        table="country",
-        fields={"country_name":country.country_name, "country_code":country.country_code},
-        where=("id", str(country.id)),
-    )
+def delete_country(id: int):
+    select_query = """
+    SELECT * FROM country WHERE id = ?
+    """
+    data = db.call_db(select_query, id)
+    delete_query = """
+    DELETE FROM country WHERE id = ?
+    """
+    db.call_db(delete_query, id)
     return data
 
+# @app.put("/update_country/{id}")
+# def update_country(id: int, new_country: Country):
+#     update_country_query = """
+#     UPDATE country
+#     SET country_name = ?, country_code = ?
+#     WHERE id = ?
+#     """
 
+#     db.call_db(update_country_query, new_country.country_name, new_country.country_code, id)
+#     # for country in app.country:
+#     #     if country.id == id:
+#     #         country.country_name = new_country.country_name
+#     #         country.country_code = new_country.country_code
+#     return TRUE
+
+
+@app.put("/update_country/{id}")
+def update_country(id: int, new_country: Country):
+    update_country_query = """
+    UPDATE country
+    SET country_name = ?, country_code = ?
+    WHERE id = ?
+    """
+
+    # Execute the update query to update the country in the database
+    db.call_db(update_country_query, new_country.country_name, new_country.country_code, id)
+
+    # Retrieve the updated country data from the database
+    get_country_query = "SELECT * FROM country WHERE id = " + str(id)
+    data = db.call_db(get_country_query)
+
+    if data:
+        # If the country is found, construct a new Country object and return it as a JSON response
+        id, country_name, country_code = data[0]
+        updated_country = Country(id=id, country_name=country_name, country_code=country_code)
+        print(data)
+        return updated_country
+    else:
+        # If the country is not found, return a 404 Not Found error
+        print( "Country not found")
+        return {"error": "Country not found"}

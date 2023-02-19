@@ -1,95 +1,80 @@
 import sqlite3
-import os
-from typing import Dict, Tuple
-import json
-
-
+import os 
+ 
 class DB:
     db_url: str
 
     def __init__(self, db_url: str):
         self.db_url = db_url
+
         if not os.path.exists(self.db_url):
-            self.__set_up_db()
+            self.init_db()
 
-    
-    def __set_up_db(self):
-        conn = sqlite3.connect(self.db_url)
-        with open("setup.sql", "r") as file:
-            script = file.read()
-            conn.executescript(script)
-            conn.commit()
-        conn.close()
-
-    def __call_db(self, query):
+    def call_db(self, query, *args):
         conn = sqlite3.connect(self.db_url)
         cur = conn.cursor()
-        res = cur.execute(query)
+        res = cur.execute(query,args)
         data = res.fetchall()
         cur.close()
         conn.commit()
         conn.close()
         return data
-    
-    
-    def insert(self, *, table: str, fields: Dict[str, str]):
-        keys = ",".join(fields.keys())
-        values = "','".join(fields.values())
 
-        query = f"""
-        INSERT INTO {table} (
-            {keys}
-        ) VALUES (
-            '{values}'
-        )
+    def init_db(self):
+        init_db_query = """
+        CREATE TABLE IF NOT EXISTS country (
+            id INTEGER NOT NULL PRIMARY KEY,
+            country_name TEXT NOT NULL,
+            country_code TEXT  NOT NULL
+        );
         """
-        return self.__call_db(query)
+
+        init_db_query2 = """
+        CREATE TABLE IF NOT EXISTS city (
+            id INTEGER NOT NULL PRIMARY KEY,
+            city_name  TEXT NOT NULL,
+            country_id  INTRGER 
+            )
+        """
+        # init_db_query3 = """
+        # CREATE TABLE IF NOT EXISTS travelagency (
+        #     id INTEGER NOT NULL PRIMARY KEY,
+        #     travelagency_name TEXT NOT NULL,
+        #     travelagency_code TEXT  NOT NULL,
+        #     address TEXT
+        # );
+        # """
+        insert_query = """
+        INSERT INTO country (
+            id,
+            country_name,
+            country_code
+            ) VALUES (?,?,?)
+        """
+        insert_query2 = """
+        INSERT INTO city (
+            id,
+            city_name, 
+            country_id
+            ) VALUES (?,?,?)
+        """
+        # insert_query3 = """
+        # INSERT INTO travelagency(
+        #     id, 
+        #     travelagency_name,
+        #     travelagency_code,
+        #     address
+        #     ) VALUES (?,?,?,?)
+        # """
+
+        self.call_db(init_db_query)
+        self.call_db(init_db_query2)
+        # self.call_db(init_db_query3)
+        self.call_db(insert_query)
+        self.call_db(insert_query2)
+        # self.call_db(insert_query3)
+    
     
 
-    def get(self, *, table: str, where: Tuple[str, str] | None = None):
-        query = f"""
-        SELECT * FROM {table} 
-        """
-        if where:
-            key, val = where
-            where_query = f"""
-            WHERE {key} = {val}
-            """
-            query = query + where_query
-        data = self.__call_db(query)
-        return data
     
-
-    def delete(self, *, table: str, id: int):
-        delete_query = f"""
-        DELETE FROM {table} WHERE id = {id}
-        """
-        self.__call_db(delete_query)
-
-
-
-        
-    def update(self, *, table: str, where: Tuple[str, str], fields: Dict[str, str]):
-        where_key, where_val = where
-        field_query = ""
-        for key, val in fields.items():
-            field_query += f"{key} = '{val}',"
-        field_query = field_query[:-1]
-        update_query = f"""
-        UPDATE {table} SET {field_query} WHERE {where_key} = '{where_val}' 
-        """
-        print(update_query)
-        return self.__call_db(update_query)
-    
-
-if __name__ == "__main__":
-    with open("seed.json","r") as f:
-            seed_data = f.read()
-            print(seed_data)
-            seed_data = json.load(f)
-            print(seed_data)
-    db = DB ("Country_api.db")
-    for table, records in seed_data.items():
-        for record in records:
-            db.insert(table= table, fields=record)
     

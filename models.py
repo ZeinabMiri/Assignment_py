@@ -10,7 +10,7 @@ class Country(BaseModel):
 class City(BaseModel):
     id: int 
     city_name: str
-    country_id: int 
+    country_id: int
 
 
 

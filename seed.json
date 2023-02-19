@@ -1,7 +1,6 @@
 {
     "country": [
         {
-            
             "id": 1 , 
             "country_name": "SWEDEN" , 
             "country_code":"SE"
@@ -38,98 +37,95 @@
     "city": [
         
         {
-            "id":1,
-        "city_name":"TORONTO",
-            "country_id":4
+            "id":8,
+            "city_name":"TORONTO",
+            "country_id": 4
+            
         },
         {
-            "id":2, 
-            "city_name":"MUNICH", 
-            "country_id":3
+            "id":9, 
+            "city_name":"MUNICH",
+            "country_id": 3
         },
         {
-            "id":3,
-            "city_name":"WASHINGTON", 
-            "country_id":5
-        },
-
-        {
-            "id":4, 
-            "city_name":"GOTHENBURG", 
-            "country_id":1 
+            "id":10,
+            "city_name":"WASHINGTON",
+            "country_id": 5
         },
 
         {
-            "id":5, 
-            "city_name":"COPENHAGEN", 
-            "country_id":6
+            "id":11, 
+            "city_name":"GOTHENBURG",
+            "country_id": 1
+        },
+
+        {
+            "id":12, 
+            "city_name":"COPENHAGEN",
+            "country_id": 6
+
         },
         {
-            "id":6, 
+            "id":13, 
             "city_name":"LUND",
             "country_id": 1
         },
         {
-            "id":7, 
-            "city_name":" WARSAW", 
-            "country_id":2
+            "id":14, 
+            "city_name":" WARSAW",
+            "country_id": 2
         },
         {
-            "id":8, 
-            "city_name":"SANFRANCISCO", 
-            "country_id":5
+            "id":15, 
+            "city_name":"SANFRANCISCO",
+            "country_id": 5
         },
         {
-            "id":9, 
-            "city_name":"QUEBEC", 
-            "country_id":4
+            "id":16, 
+            "city_name":"QUEBEC",
+            "country_id": 4
         }, 
         {
-            "id":10, 
-            "city_name":"STOCKHOLM", 
-            "country_id":1
+            "id":17, 
+            "city_name":"STOCKHOLM",
+            "country_id": 1
         }
     ],
 
     "travelagency": [
 
         {
-            "id":1,
+            "id":18,
             "travelagency_name":"JOHANSSON",
             "travellagency_code":4611,
-            "address":"stuartsgatan 8",
-            "city_id":10
+            "address":"stuartsgatan 8"
         },
 
         {
-            "id":2, 
+            "id":19, 
             "travelagency_name":"AREATRIP",
             "travellagency_code":1800,
-            "address":" GUSTAV STREET 12",
-            "city_id":3
+            "address":" GUSTAV STREET 12"
         },
         {
-            "id":3,
+            "id":20,
             "travelagency_name":"EXPEDIA",
             "travellagency_code": 1009,
-            "address":"FREINFS BLV3",
-            "city_id": 3
+            "address":"FREINFS BLV3"
         },
 
         {
-            "id":4,
+            "id":21,
             "travelagency_name":"C&C",
             "travellagency_code":4500,
-            "address":"RHOSKILDE 5",
-            "city_id":5
+            "address":"RHOSKILDE 5"
         },
 
         {
-            "id":5,
+            "id":22,
             "travelagency_name":"ATRETO",
             "travellagency_code":1111,
-            "address":"NATIONAL PARK 5",
-            "city_id":9 
+            "address":"NATIONAL PARK 5"
         }
     ]   
 }
