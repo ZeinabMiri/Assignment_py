@@ -67,6 +67,7 @@ class DB:
         #     ) VALUES (?,?,?,?)
         # """
 
+
         self.call_db(init_db_query)
         self.call_db(init_db_query2)
         # self.call_db(init_db_query3)
