@@ -42,7 +42,5 @@ with open("seed.json" , "r") as f:
     for city in seed_data["city"]:
         db.call_db(create_city, city["id"], city["city_name"], city["country_id"])
     
-
-    
     # for travelagency in seed_data["travelagency"]:
     #     db.call_db(create_travelagency, travelagency["id"], travelagency["travelagency_name"], travelagency["travelagency_code"], travelagency["address"])
