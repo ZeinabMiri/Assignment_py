@@ -36,14 +36,7 @@ class DB:
             country_id  INTRGER 
             )
         """
-        # init_db_query3 = """
-        # CREATE TABLE IF NOT EXISTS travelagency (
-        #     id INTEGER NOT NULL PRIMARY KEY,
-        #     travelagency_name TEXT NOT NULL,
-        #     travelagency_code TEXT  NOT NULL,
-        #     address TEXT
-        # );
-        # """
+      
         insert_query = """
         INSERT INTO country (
             id,
@@ -58,22 +51,15 @@ class DB:
             country_id
             ) VALUES (?,?,?)
         """
-        # insert_query3 = """
-        # INSERT INTO travelagency(
-        #     id, 
-        #     travelagency_name,
-        #     travelagency_code,
-        #     address
-        #     ) VALUES (?,?,?,?)
-        # """
+       
 
 
         self.call_db(init_db_query)
         self.call_db(init_db_query2)
-        # self.call_db(init_db_query3)
+       
         self.call_db(insert_query)
         self.call_db(insert_query2)
-        # self.call_db(insert_query3)
+       
     
     
 

@@ -14,13 +14,6 @@ class City(BaseModel):
 
 
 
-class Travelagency(BaseModel):
-    id: int
-    travelagency_name: str
-    travelagency_code: int 
-    address: str
-    city_id: int
-
 
 
     

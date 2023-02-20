@@ -90,42 +90,5 @@
             "city_name":"STOCKHOLM",
             "country_id": 1
         }
-    ],
-
-    "travelagency": [
-
-        {
-            "id":18,
-            "travelagency_name":"JOHANSSON",
-            "travellagency_code":4611,
-            "address":"stuartsgatan 8"
-        },
-
-        {
-            "id":19, 
-            "travelagency_name":"AREATRIP",
-            "travellagency_code":1800,
-            "address":" GUSTAV STREET 12"
-        },
-        {
-            "id":20,
-            "travelagency_name":"EXPEDIA",
-            "travellagency_code": 1009,
-            "address":"FREINFS BLV3"
-        },
-
-        {
-            "id":21,
-            "travelagency_name":"C&C",
-            "travellagency_code":4500,
-            "address":"RHOSKILDE 5"
-        },
-
-        {
-            "id":22,
-            "travelagency_name":"ATRETO",
-            "travellagency_code":1111,
-            "address":"NATIONAL PARK 5"
-        }
     ]   
 }
