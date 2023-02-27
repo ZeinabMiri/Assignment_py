@@ -28,7 +28,6 @@ class DB:
             country_code TEXT  NOT NULL
         );
         """
-
        
         insert_query = """
         INSERT INTO country (
