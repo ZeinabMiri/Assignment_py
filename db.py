@@ -29,15 +29,13 @@ class DB:
         );
         """
        
-       
         insert_query = """
         INSERT INTO country (
             country_name,
             country_code
             ) VALUES ('Sweden','SW');
         """
-      
-       
+    
 
 
         self.call_db(init_db_query)

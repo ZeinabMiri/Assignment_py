@@ -51,7 +51,6 @@ def add_country(country: Country):
     # app.curr_id += 1
     return "Adds a task"
    
-
 @app.delete("/delete_country/{id}")
 def delete_country(id: int):
 
