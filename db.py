@@ -29,36 +29,21 @@ class DB:
         );
         """
 
-        init_db_query2 = """
-        CREATE TABLE IF NOT EXISTS city (
-            id INTEGER NOT NULL PRIMARY KEY,
-            city_name  TEXT NOT NULL,
-            country_id  INTRGER 
-            )
-        """
-      
+       
         insert_query = """
         INSERT INTO country (
-            id,
             country_name,
             country_code
-            ) VALUES (?,?,?)
+            ) VALUES ('Sweden','SW');
         """
-        insert_query2 = """
-        INSERT INTO city (
-            id,
-            city_name, 
-            country_id
-            ) VALUES (?,?,?)
-        """
+      
        
 
 
         self.call_db(init_db_query)
-        self.call_db(init_db_query2)
        
         self.call_db(insert_query)
-        self.call_db(insert_query2)
+       
        
     
     
