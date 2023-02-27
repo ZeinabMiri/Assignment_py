@@ -29,6 +29,7 @@ class DB:
         );
         """
        
+       
         insert_query = """
         INSERT INTO country (
             country_name,
