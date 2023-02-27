@@ -35,8 +35,6 @@ class DB:
             country_code
             ) VALUES ('Sweden','SW');
         """
-    
-
 
         self.call_db(init_db_query)
        
